@@ -1,0 +1,153 @@
+{
+  "info": {
+    "name": "Lead Manager API",
+    "description": "REST API for the Lead Manager app. Run 'Auth > Login' first — it captures the JWT into the collection variable {{token}}, which every other request uses automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "token", "value": "" },
+    { "key": "leadId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('token', body.token);",
+                  "pm.test('got token', () => pm.expect(body.token).to.be.a('string'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin123!\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "List leads (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/leads?page=1&pageSize=5&search=&status=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "leads"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "5" },
+                { "key": "search", "value": "" },
+                { "key": "status", "value": "", "description": "NEW | CONTACTED | QUALIFIED | WON | LOST" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create lead",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.collectionVariables.set('leadId', pm.response.json().id);"]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/leads", "host": ["{{baseUrl}}"], "path": ["api", "leads"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Lead\",\n  \"company\": \"Acme\",\n  \"email\": \"new@acme.com\",\n  \"phone\": \"555-0199\",\n  \"source\": \"Website Form\",\n  \"status\": \"NEW\",\n  \"notes\": \"Created via Postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get lead by id",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/leads/{{leadId}}", "host": ["{{baseUrl}}"], "path": ["api", "leads", "{{leadId}}"] }
+          }
+        },
+        {
+          "name": "Update lead",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/leads/{{leadId}}", "host": ["{{baseUrl}}"], "path": ["api", "leads", "{{leadId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"WON\"\n}" }
+          }
+        },
+        {
+          "name": "Delete lead",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/leads/{{leadId}}", "host": ["{{baseUrl}}"], "path": ["api", "leads", "{{leadId}}"] }
+          }
+        },
+        {
+          "name": "Dashboard stats",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/leads/dashboard", "host": ["{{baseUrl}}"], "path": ["api", "leads", "dashboard"] }
+          }
+        },
+        {
+          "name": "Reports",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/leads/reports", "host": ["{{baseUrl}}"], "path": ["api", "leads", "reports"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get settings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/settings", "host": ["{{baseUrl}}"], "path": ["api", "settings"] }
+          }
+        },
+        {
+          "name": "Update settings",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/settings", "host": ["{{baseUrl}}"], "path": ["api", "settings"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"theme\": \"dark\",\n  \"pageSize\": 10,\n  \"showAvatars\": true,\n  \"confirmBeforeDelete\": true\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

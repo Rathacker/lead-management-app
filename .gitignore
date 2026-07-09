@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+.DS_Store
+
+# design handoff working files (not part of the submission)
+design-handoff/
+*.zip

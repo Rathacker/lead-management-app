@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lead Manager — API Documentation</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+    <style>
+      body { margin: 0; }
+      .topbar { display: none; }
+      .banner {
+        font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+        background: #1b1b1f;
+        color: #e7ecf4;
+        padding: 14px 24px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .banner strong { color: #9dbcff; }
+      .banner code { background: #2a2a30; padding: 1px 6px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <strong>Lead Manager API</strong> — static reference generated from the server's OpenAPI spec.
+      To exercise endpoints live, run <code>docker compose up -d --build</code> and use
+      <code>http://localhost:4000/api-docs</code>, or import the Postman collection from the repo.
+    </div>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script>
+      window.onload = () => {
+        SwaggerUIBundle({
+          url: "./openapi.json",
+          dom_id: "#swagger-ui",
+          presets: [SwaggerUIBundle.presets.apis],
+          defaultModelsExpandDepth: 1,
+          docExpansion: "list",
+        });
+      };
+    </script>
+  </body>
+</html>

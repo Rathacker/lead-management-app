@@ -1,0 +1,13 @@
+import type { Settings } from "../types";
+
+export const PAGE_SIZE_OPTIONS = [5, 8, 10, 15] as const;
+
+export const DEFAULT_SETTINGS: Settings = {
+  theme: "light",
+  pageSize: 5,
+  showAvatars: true,
+  confirmBeforeDelete: true,
+};
+
+export const SEARCH_DEBOUNCE_MS = 300;
+export const TOAST_DURATION_MS = 2400;
