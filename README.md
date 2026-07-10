@@ -5,7 +5,7 @@ status breakdowns, search/filter, pipeline reports, and per-user settings.
 
 > **📖 Live API documentation (Swagger UI):** https://rathacker.github.io/lead-management-app/
 > **▶️ Run locally (no build):** `docker compose -f docker-compose.prod.yml up -d` → app at http://localhost:5173 · API at http://localhost:4000
-> **🔑 Login:** `admin@example.com` / `Admin123!`
+> **🔑 Login:** `admin@example.com` / `12345`
 
 - **Frontend:** React + TypeScript (Vite), [Mantine](https://mantine.dev) UI, [Recharts](https://recharts.org) for report charts.
 - **Backend:** Node.js + Express + TypeScript, [Prisma](https://www.prisma.io) ORM.
@@ -37,7 +37,7 @@ curl.exe -sSL -o lead-manager.yml https://raw.githubusercontent.com/Rathacker/le
 ```
 
 Wait ~15 seconds (first boot runs migrations + seeding), then open
-**http://localhost:5173** and log in with `admin@example.com` / `Admin123!`.
+**http://localhost:5173** and log in with `admin@example.com` / `12345`.
 
 To stop: `docker compose -f lead-manager.yml down` (add `-v` to also remove the database).
 
@@ -66,7 +66,7 @@ This starts three containers and, on the server, automatically runs
 | Swagger  | http://localhost:4000/api-docs   |
 | Postgres | localhost:5432                   |
 
-**Login:** `admin@example.com` / `Admin123!`
+**Login:** `admin@example.com` / `12345`
 
 Stop with `docker compose down` (add `-v` to also drop the database volume).
 
@@ -110,7 +110,7 @@ The client talks to `http://localhost:4000/api` by default. Override with a
 | `PORT`               | API port                             | `4000`                           |
 | `CORS_ORIGIN`        | Allowed browser origin               | `http://localhost:5173`          |
 | `SEED_USER_EMAIL`    | Seeded login email                   | `admin@example.com`              |
-| `SEED_USER_PASSWORD` | Seeded login password                | `Admin123!`                      |
+| `SEED_USER_PASSWORD` | Seeded login password                | `12345`                      |
 
 ---
 

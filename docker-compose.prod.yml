@@ -3,7 +3,7 @@
 ##   docker compose -f docker-compose.prod.yml up -d
 ##
 ## Images are published to GitHub Container Registry (public, no login needed to pull).
-## App:     http://localhost:5173   (login: admin@example.com / Admin123!)
+## App:     http://localhost:5173   (login: admin@example.com / 12345)
 ## API:     http://localhost:4000
 ## Swagger: http://localhost:4000/api-docs
 
@@ -38,7 +38,7 @@ services:
       PORT: "4000"
       CORS_ORIGIN: "http://localhost:5173"
       SEED_USER_EMAIL: "admin@example.com"
-      SEED_USER_PASSWORD: "Admin123!"
+      SEED_USER_PASSWORD: "12345"
     ports:
       - "4000:4000"
 

@@ -324,7 +324,7 @@
           "password": {
             "type": "string",
             "format": "password",
-            "example": "Admin123!"
+            "example": "12345"
           }
         }
       },

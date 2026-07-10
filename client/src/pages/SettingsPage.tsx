@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, Card, Divider, Group, SegmentedControl, Select, Stack, Switch, Text, Title } from "@mantine/core";
+import { Avatar, Button, Card, Center, Divider, Group, SegmentedControl, Select, Stack, Switch, Text, Title } from "@mantine/core";
 import { IconLogout, IconMoon, IconSun } from "@tabler/icons-react";
 import { useAuth } from "../context/AuthContext";
 import { useSettings } from "../context/SettingsContext";
@@ -68,8 +68,24 @@ export default function SettingsPage() {
             value={settings.theme}
             onChange={(value) => persist({ theme: value as Settings["theme"] })}
             data={[
-              { value: "light", label: <Group gap={6}><IconSun size={15} /> Light</Group> },
-              { value: "dark", label: <Group gap={6}><IconMoon size={15} /> Dark</Group> },
+              {
+                value: "light",
+                label: (
+                  <Center style={{ gap: 8, whiteSpace: "nowrap" }}>
+                    <IconSun size={16} />
+                    <span>Light</span>
+                  </Center>
+                ),
+              },
+              {
+                value: "dark",
+                label: (
+                  <Center style={{ gap: 8, whiteSpace: "nowrap" }}>
+                    <IconMoon size={16} />
+                    <span>Dark</span>
+                  </Center>
+                ),
+              },
             ]}
           />
         </Group>
@@ -125,7 +141,7 @@ export default function SettingsPage() {
           Account
         </Text>
         <Group>
-          <Avatar radius="xl" size={46} color="blue" variant="light">
+          <Avatar radius="xl" size={46} color="brand" variant="light">
             {(email ?? "AD").slice(0, 2).toUpperCase()}
           </Avatar>
           <div style={{ flex: 1, minWidth: 0 }}>

@@ -114,7 +114,7 @@ const schemas = {
     required: ["email", "password"],
     properties: {
       email: { type: "string", format: "email", example: "admin@example.com" },
-      password: { type: "string", format: "password", example: "Admin123!" },
+      password: { type: "string", format: "password", example: "12345" },
     },
   },
   LoginResponse: {

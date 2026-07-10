@@ -29,7 +29,7 @@ services:
       PORT: "4000"
       CORS_ORIGIN: "http://localhost:5173"
       SEED_USER_EMAIL: "admin@example.com"
-      SEED_USER_PASSWORD: "Admin123!"
+      SEED_USER_PASSWORD: "12345"
     ports:
       - "4000:4000"
 

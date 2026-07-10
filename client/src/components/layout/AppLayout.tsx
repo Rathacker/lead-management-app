@@ -18,7 +18,7 @@ export function AppLayout() {
       }}
       padding="lg"
     >
-      <AppShell.Header>
+      <AppShell.Header bg="var(--mantine-color-default)">
         <Group h="100%" px="md" gap="sm">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
@@ -29,7 +29,7 @@ export function AppLayout() {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar p="md" bg="var(--mantine-color-default)">
         <SidebarNav onNavigate={closeMobile} />
       </AppShell.Navbar>
 

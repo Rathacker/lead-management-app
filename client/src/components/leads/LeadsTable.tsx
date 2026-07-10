@@ -32,7 +32,7 @@ export function LeadsTable({ leads, showAvatars, onEdit, onDelete }: LeadsTableP
               <Table.Td>
                 <Group gap="sm" wrap="nowrap">
                   {showAvatars && (
-                    <Avatar radius="xl" size={34} color="blue" variant="light">
+                    <Avatar radius="xl" size={34} color="brand" variant="light">
                       {initials(lead.name)}
                     </Avatar>
                   )}

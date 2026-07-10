@@ -36,7 +36,7 @@ export function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
 
       <Stack gap="xs">
         <Group gap="sm" px="xs">
-          <Avatar radius="xl" size={34} color="blue" variant="light">
+          <Avatar radius="xl" size={34} color="brand" variant="light">
             {(email ?? "AD").slice(0, 2).toUpperCase()}
           </Avatar>
           <div style={{ minWidth: 0 }}>

@@ -49,7 +49,7 @@ export default function ReportsPage() {
   const statusData = STATUS_ORDER.map((s) => ({
     name: STATUS_META[s].label,
     value: data.byStatus[s] ?? 0,
-    fill: STATUS_META[s].hex,
+    fill: STATUS_META[s].dot,
   }));
   const sourceData = data.bySource.map((row) => ({ name: row.source, value: row.count }));
 

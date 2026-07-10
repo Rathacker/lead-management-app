@@ -7,3 +7,12 @@ body,
 body {
   margin: 0;
 }
+
+/* Page background per the design handoff: soft grey in light, deep navy in
+   dark. Cards/surfaces keep their own (white / navy) colour and stand off it. */
+:root[data-mantine-color-scheme="light"] {
+  --mantine-color-body: #f5f6f8 !important;
+}
+:root[data-mantine-color-scheme="dark"] {
+  --mantine-color-body: #0e1320 !important;
+}

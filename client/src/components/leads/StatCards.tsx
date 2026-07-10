@@ -27,7 +27,7 @@ export function StatCards({ stats }: { stats: DashboardStats }) {
           key={status}
           label={STATUS_META[status].label}
           value={stats.byStatus[status] ?? 0}
-          dot={STATUS_META[status].hex}
+          dot={STATUS_META[status].dot}
         />
       ))}
     </SimpleGrid>
