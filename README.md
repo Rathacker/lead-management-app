@@ -3,6 +3,10 @@
 A small full-stack web app for managing sales leads: CRUD, a dashboard with
 status breakdowns, search/filter, pipeline reports, and per-user settings.
 
+> **📖 Live API documentation (Swagger UI):** https://rathacker.github.io/lead-management-app/
+> **▶️ Run locally:** `docker compose up -d --build` → app at http://localhost:5173 · API at http://localhost:4000
+> **🔑 Login:** `admin@example.com` / `Admin123!`
+
 - **Frontend:** React + TypeScript (Vite), [Mantine](https://mantine.dev) UI, [Recharts](https://recharts.org) for report charts.
 - **Backend:** Node.js + Express + TypeScript, [Prisma](https://www.prisma.io) ORM.
 - **Database:** PostgreSQL.
