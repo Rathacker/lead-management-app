@@ -20,16 +20,32 @@ persisted to the database.
 
 ---
 
-## Fastest start — pre-built images (no build)
+## One-line start (no clone, no build)
 
-Requires only Docker Desktop. Pulls published images from GitHub Container
-Registry (public — no login needed) and starts everything:
+With only **Docker Desktop** installed, this single command fetches the compose
+file and launches everything (Postgres + API + frontend) from published, public
+images — no repository checkout required:
 
+**macOS / Linux**
 ```bash
-docker compose -f docker-compose.prod.yml up -d
+curl -sSL https://raw.githubusercontent.com/Rathacker/lead-management-app/main/docker-compose.prod.yml | docker compose -f - up -d
 ```
 
-That's it — no source build. Then open http://localhost:5173.
+**Windows (PowerShell)**
+```powershell
+curl.exe -sSL -o lead-manager.yml https://raw.githubusercontent.com/Rathacker/lead-management-app/main/docker-compose.prod.yml; docker compose -f lead-manager.yml up -d
+```
+
+Wait ~15 seconds (first boot runs migrations + seeding), then open
+**http://localhost:5173** and log in with `admin@example.com` / `Admin123!`.
+
+To stop: `docker compose -f lead-manager.yml down` (add `-v` to also remove the database).
+
+### Or, from a cloned repo
+
+```bash
+docker compose -f docker-compose.prod.yml up -d      # pre-built images, no build
+```
 
 ## Quick start (build from source)
 
