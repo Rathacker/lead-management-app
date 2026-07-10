@@ -4,7 +4,7 @@ A small full-stack web app for managing sales leads: CRUD, a dashboard with
 status breakdowns, search/filter, pipeline reports, and per-user settings.
 
 > **📖 Live API documentation (Swagger UI):** https://rathacker.github.io/lead-management-app/
-> **▶️ Run locally:** `docker compose up -d --build` → app at http://localhost:5173 · API at http://localhost:4000
+> **▶️ Run locally (no build):** `docker compose -f docker-compose.prod.yml up -d` → app at http://localhost:5173 · API at http://localhost:4000
 > **🔑 Login:** `admin@example.com` / `Admin123!`
 
 - **Frontend:** React + TypeScript (Vite), [Mantine](https://mantine.dev) UI, [Recharts](https://recharts.org) for report charts.
@@ -20,7 +20,18 @@ persisted to the database.
 
 ---
 
-## Quick start (Docker — recommended)
+## Fastest start — pre-built images (no build)
+
+Requires only Docker Desktop. Pulls published images from GitHub Container
+Registry (public — no login needed) and starts everything:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+That's it — no source build. Then open http://localhost:5173.
+
+## Quick start (build from source)
 
 Requires Docker Desktop.
 

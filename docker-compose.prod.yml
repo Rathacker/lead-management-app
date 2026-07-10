@@ -1,0 +1,54 @@
+## Run the app from PRE-BUILT images — no source build required.
+##
+##   docker compose -f docker-compose.prod.yml up -d
+##
+## Images are published to GitHub Container Registry (public, no login needed to pull).
+## App:     http://localhost:5173   (login: admin@example.com / Admin123!)
+## API:     http://localhost:4000
+## Swagger: http://localhost:4000/api-docs
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: leads_user
+      POSTGRES_PASSWORD: leads_password
+      POSTGRES_DB: leads_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U leads_user -d leads_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    image: ghcr.io/rathacker/lead-management-app-server:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://leads_user:leads_password@db:5432/leads_db?schema=public"
+      JWT_SECRET: "dev-secret-change-me-in-production"
+      JWT_EXPIRES_IN: "8h"
+      PORT: "4000"
+      CORS_ORIGIN: "http://localhost:5173"
+      SEED_USER_EMAIL: "admin@example.com"
+      SEED_USER_PASSWORD: "Admin123!"
+    ports:
+      - "4000:4000"
+
+  client:
+    image: ghcr.io/rathacker/lead-management-app-client:latest
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "5173:80"
+
+volumes:
+  db_data:
