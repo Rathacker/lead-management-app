@@ -29,7 +29,11 @@ async function getOrCreate(userId: string) {
  *     tags: [Settings]
  *     security: [{ bearerAuth: [] }]
  *     responses:
- *       200: { description: Settings object }
+ *       200:
+ *         description: Settings object
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Settings' }
  *   put:
  *     summary: Update the current user's settings
  *     tags: [Settings]
@@ -38,15 +42,18 @@ async function getOrCreate(userId: string) {
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               theme: { type: string, enum: [light, dark] }
- *               pageSize: { type: integer }
- *               showAvatars: { type: boolean }
- *               confirmBeforeDelete: { type: boolean }
+ *           schema: { $ref: '#/components/schemas/SettingsInput' }
  *     responses:
- *       200: { description: Updated settings }
+ *       200:
+ *         description: Updated settings
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Settings' }
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  */
 settingsRouter.get("/", async (req: AuthedRequest, res) => {
   const settings = await getOrCreate(req.userId as string);

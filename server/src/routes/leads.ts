@@ -47,7 +47,16 @@ function emptyCounts(): Record<Status, number> {
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
  *     responses:
- *       200: { description: Dashboard stats }
+ *       200:
+ *         description: Dashboard stats
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/DashboardStats' }
+ *       401:
+ *         description: Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  */
 leadsRouter.get("/dashboard", async (_req, res) => {
   const [total, grouped] = await Promise.all([
@@ -67,7 +76,11 @@ leadsRouter.get("/dashboard", async (_req, res) => {
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
  *     responses:
- *       200: { description: Report aggregates by status and source with derived KPIs }
+ *       200:
+ *         description: Report aggregates by status and source with derived KPIs
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/ReportData' }
  */
 leadsRouter.get("/reports", async (_req, res) => {
   const [total, byStatusRows, bySourceRows] = await Promise.all([
@@ -113,13 +126,31 @@ leadsRouter.get("/reports", async (_req, res) => {
  *       - { in: query, name: page, schema: { type: integer, default: 1 } }
  *       - { in: query, name: pageSize, schema: { type: integer, default: 5 } }
  *     responses:
- *       200: { description: Paginated leads envelope }
+ *       200:
+ *         description: Paginated leads envelope
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/PaginatedLeads' }
  *   post:
  *     summary: Create a lead
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/LeadInput' }
  *     responses:
- *       201: { description: Lead created }
+ *       201:
+ *         description: Lead created
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Lead' }
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  */
 leadsRouter.get("/", async (req, res) => {
   const { search, status } = req.query as { search?: string; status?: string };
@@ -164,26 +195,51 @@ leadsRouter.post("/", async (req, res) => {
  *     summary: Get a lead by id
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
- *     parameters: [{ in: path, name: id, required: true, schema: { type: string } }]
+ *     parameters: [{ in: path, name: id, required: true, schema: { type: string, format: uuid } }]
  *     responses:
- *       200: { description: Lead found }
- *       404: { description: Lead not found }
+ *       200:
+ *         description: Lead found
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Lead' }
+ *       404:
+ *         description: Lead not found
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  *   put:
- *     summary: Update a lead
+ *     summary: Update a lead (partial — only sent fields change)
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
- *     parameters: [{ in: path, name: id, required: true, schema: { type: string } }]
+ *     parameters: [{ in: path, name: id, required: true, schema: { type: string, format: uuid } }]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: { $ref: '#/components/schemas/LeadInput' }
  *     responses:
- *       200: { description: Lead updated }
- *       404: { description: Lead not found }
+ *       200:
+ *         description: Lead updated
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Lead' }
+ *       404:
+ *         description: Lead not found
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  *   delete:
  *     summary: Delete a lead
  *     tags: [Leads]
  *     security: [{ bearerAuth: [] }]
- *     parameters: [{ in: path, name: id, required: true, schema: { type: string } }]
+ *     parameters: [{ in: path, name: id, required: true, schema: { type: string, format: uuid } }]
  *     responses:
- *       204: { description: Lead deleted }
- *       404: { description: Lead not found }
+ *       204: { description: Lead deleted (no content) }
+ *       404:
+ *         description: Lead not found
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  */
 leadsRouter.get("/:id", async (req, res) => {
   const lead = await prisma.lead.findUnique({ where: { id: req.params.id } });

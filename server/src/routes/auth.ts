@@ -21,17 +21,23 @@ const loginSchema = z.object({
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             type: object
- *             required: [email, password]
- *             properties:
- *               email: { type: string, format: email }
- *               password: { type: string }
+ *           schema: { $ref: '#/components/schemas/LoginRequest' }
  *     responses:
  *       200:
  *         description: JWT issued
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/LoginResponse' }
+ *       400:
+ *         description: Invalid request body
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  *       401:
  *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema: { $ref: '#/components/schemas/Error' }
  */
 authRouter.post("/login", async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
