@@ -1,5 +1,9 @@
 import "dotenv/config";
-import express from "express";
+// Patches Express so errors thrown in async route handlers are forwarded to the
+// error-handling middleware instead of becoming unhandled rejections (which
+// would crash the process). Must be imported before routes are registered.
+import "express-async-errors";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { authRouter } from "./routes/auth";
@@ -26,6 +30,14 @@ app.use("/api/leads", leadsRouter);
 app.use("/api/settings", settingsRouter);
 
 app.use((_req, res) => res.status(404).json({ error: "Not found" }));
+
+// Global error handler: any error thrown in a route is caught here and returned
+// as a 500 (or a mapped status) so a single bad request can never crash the server.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
+});
 
 const port = Number(process.env.PORT ?? 4000);
 app.listen(port, () => {
